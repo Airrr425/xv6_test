@@ -199,7 +199,7 @@ w_pmpaddr0(uint64 x)
 // use riscv's sv39 page table scheme.
 #define SATP_SV39 (8L << 60)
 
-#define MAKE_SATP(pagetable) (SATP_SV39 | (((uint64)pagetable) >> 12))
+#define MAKE_SATP(pagetable) (SATP_SV39 | (((uint64)pagetable) >> 12))  //将页表基地址设置到SATP寄存器的相应字段中，同时保留启用SV39模式的位。
 
 // supervisor address translation and protection;
 // holds the address of the page table.
@@ -332,10 +332,10 @@ typedef uint64 *pagetable_t; // 512 PTEs
 
 #endif // __ASSEMBLER__
 
-#define PGSIZE 4096 // bytes per page
+#define PGSIZE 4096 // bytes per page 4KB
 #define PGSHIFT 12  // bits of offset within a page
 
-#define PGROUNDUP(sz)  (((sz)+PGSIZE-1) & ~(PGSIZE-1))
+#define PGROUNDUP(sz)  (((sz)+PGSIZE-1) & ~(PGSIZE-1))  //实现了向上舍入到最近的页大小倍数
 #define PGROUNDDOWN(a) (((a)) & ~(PGSIZE-1))
 
 #define PTE_V (1L << 0) // valid

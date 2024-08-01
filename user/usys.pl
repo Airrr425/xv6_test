@@ -36,3 +36,7 @@ entry("getpid");
 entry("sbrk");
 entry("sleep");
 entry("uptime");
+entry("getprocs");
+entry("alloc");
+entry("bfa");
+entry("wfa");

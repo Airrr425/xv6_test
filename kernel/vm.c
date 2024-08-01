@@ -9,11 +9,11 @@
 /*
  * the kernel's page table.
  */
-pagetable_t kernel_pagetable;
+pagetable_t kernel_pagetable;  //存储内核的页表
 
-extern char etext[];  // kernel.ld sets this to end of kernel code.
+extern char etext[];  // kernel.ld sets this to end of kernel code.指向内核代码区结束位置
 
-extern char trampoline[]; // trampoline.S
+extern char trampoline[]; // trampoline.S  //处理中断和异常时的上下文切换
 
 // Make a direct-map page table for the kernel.
 pagetable_t
@@ -21,7 +21,7 @@ kvmmake(void)
 {
   pagetable_t kpgtbl;
 
-  kpgtbl = (pagetable_t) kalloc();
+  kpgtbl = (pagetable_t) kalloc();  //创建并初始化页表
   memset(kpgtbl, 0, PGSIZE);
 
   // uart registers
@@ -53,7 +53,7 @@ kvmmake(void)
 void
 kvminit(void)
 {
-  kernel_pagetable = kvmmake();
+  kernel_pagetable = kvmmake();  //初始化全局的kernel_pagetable变量
 }
 
 // Switch h/w page table register to the kernel's page table,
@@ -62,12 +62,12 @@ void
 kvminithart()
 {
   // wait for any previous writes to the page table memory to finish.
-  sfence_vma();
+  sfence_vma();  //确保之前页表成功写入
 
-  w_satp(MAKE_SATP(kernel_pagetable));
+  w_satp(MAKE_SATP(kernel_pagetable)); //页表寄存器指向kernle_pagetable
 
   // flush stale entries from the TLB.
-  sfence_vma();
+  sfence_vma();  //刷新tlb
 }
 
 // Return the address of the PTE in page table pagetable

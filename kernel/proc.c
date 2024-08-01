@@ -681,3 +681,25 @@ procdump(void)
     printf("\n");
   }
 }
+
+
+
+int getprocs(void) {  
+    int count = 0;  
+    struct proc *p;
+    for (p=proc; p < &proc[NPROC]; p++) {  
+        acquire(&p->lock); // 获取进程表的锁  
+        if (p->state != UNUSED) {  
+            count++;  
+            printf("pid:%d\nname:%s\n",p->pid,p->name);
+        }  
+        release(&p->lock); // 释放进程表的锁 
+    }  
+    return count;  
+}
+
+uint64
+sys_getprocs(void)
+{
+ 		 return getprocs();
+}

@@ -63,6 +63,16 @@ void            ramdiskrw(struct buf*);
 void*           kalloc(void);
 void            kfree(void *);
 void            kinit(void);
+void*           malloc(uint);
+void            free(void*);
+void*           best_fit_alloc(uint);
+void*           worst_fit_alloc(uint);
+void            printheap();
+
+
+
+
+
 
 // log.c
 void            initlog(int, struct superblock*);
